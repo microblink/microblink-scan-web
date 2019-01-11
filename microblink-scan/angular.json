@@ -24,9 +24,12 @@
             "tsConfig": "apps/public/scan-client/tsconfig.app.json",
             "assets": [
               "apps/public/scan-client/src/favicon.ico",
-              "apps/public/scan-client/src/assets"
+              "apps/public/scan-client/src/assets",
+              "apps/public/scan-client/src/manifest.json"
             ],
-            "styles": ["apps/public/scan-client/src/styles.scss"],
+            "styles": [
+              "apps/public/scan-client/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -52,7 +55,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -80,7 +84,9 @@
               "apps/public/scan-client/tsconfig.app.json",
               "apps/public/scan-client/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -115,7 +121,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/public/scan-client-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -143,7 +151,9 @@
               "apps/private/scan-admin/src/favicon.ico",
               "apps/private/scan-admin/src/assets"
             ],
-            "styles": ["apps/private/scan-admin/src/styles.scss"],
+            "styles": [
+              "apps/private/scan-admin/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -198,7 +208,9 @@
               "apps/private/scan-admin/tsconfig.app.json",
               "apps/private/scan-admin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -233,7 +245,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/private/scan-admin-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -251,7 +265,9 @@
               "libs/exchanger/scan-data-exchanger/tsconfig.lib.json",
               "libs/exchanger/scan-data-exchanger/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
