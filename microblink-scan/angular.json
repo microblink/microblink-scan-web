@@ -119,6 +119,123 @@
           }
         }
       }
+    },
+    "scan-admin-scan-admin": {
+      "root": "apps/scan-admin/scan-admin/",
+      "sourceRoot": "apps/scan-admin/scan-admin/src",
+      "projectType": "application",
+      "prefix": "microblink",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/scan-admin/scan-admin",
+            "index": "apps/scan-admin/scan-admin/src/index.html",
+            "main": "apps/scan-admin/scan-admin/src/main.ts",
+            "polyfills": "apps/scan-admin/scan-admin/src/polyfills.ts",
+            "tsConfig": "apps/scan-admin/scan-admin/tsconfig.app.json",
+            "assets": [
+              "apps/scan-admin/scan-admin/src/favicon.ico",
+              "apps/scan-admin/scan-admin/src/assets"
+            ],
+            "styles": ["apps/scan-admin/scan-admin/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/scan-admin/scan-admin/src/environments/environment.ts",
+                  "with": "apps/scan-admin/scan-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "scan-admin-scan-admin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "scan-admin-scan-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "scan-admin-scan-admin:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/scan-admin/scan-admin/tsconfig.app.json",
+              "apps/scan-admin/scan-admin/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/scan-admin/scan-admin/jest.config.js",
+            "tsConfig": "apps/scan-admin/scan-admin/tsconfig.spec.json",
+            "setupFile": "apps/scan-admin/scan-admin/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "scan-admin-scan-admin-e2e": {
+      "root": "apps/scan-admin/scan-admin-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/scan-admin/scan-admin-e2e/cypress.json",
+            "tsConfig": "apps/scan-admin/scan-admin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "scan-admin-scan-admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "scan-admin-scan-admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/scan-admin/scan-admin-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
     }
   },
   "cli": {
