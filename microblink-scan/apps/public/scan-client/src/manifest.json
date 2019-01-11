@@ -1,6 +1,6 @@
 {
-  "name": "public-scan-client",
-  "short_name": "public-scan-client",
+  "name": "Microblink Scan",
+  "short_name": "MB Scan",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
