@@ -7,5 +7,12 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "scan-client-scan-client": {
+      "tags": ["microblink"]
+    },
+    "scan-client-scan-client-e2e": {
+      "tags": []
+    }
+  }
 }

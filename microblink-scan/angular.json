@@ -2,7 +2,125 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "scan-client-scan-client": {
+      "root": "apps/scan-client/scan-client/",
+      "sourceRoot": "apps/scan-client/scan-client/src",
+      "projectType": "application",
+      "prefix": "microblink",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/scan-client/scan-client",
+            "index": "apps/scan-client/scan-client/src/index.html",
+            "main": "apps/scan-client/scan-client/src/main.ts",
+            "polyfills": "apps/scan-client/scan-client/src/polyfills.ts",
+            "tsConfig": "apps/scan-client/scan-client/tsconfig.app.json",
+            "assets": [
+              "apps/scan-client/scan-client/src/favicon.ico",
+              "apps/scan-client/scan-client/src/assets"
+            ],
+            "styles": ["apps/scan-client/scan-client/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/scan-client/scan-client/src/environments/environment.ts",
+                  "with": "apps/scan-client/scan-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "scan-client-scan-client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "scan-client-scan-client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "scan-client-scan-client:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/scan-client/scan-client/tsconfig.app.json",
+              "apps/scan-client/scan-client/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/scan-client/scan-client/jest.config.js",
+            "tsConfig": "apps/scan-client/scan-client/tsconfig.spec.json",
+            "setupFile": "apps/scan-client/scan-client/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "scan-client-scan-client-e2e": {
+      "root": "apps/scan-client/scan-client-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/scan-client/scan-client-e2e/cypress.json",
+            "tsConfig": "apps/scan-client/scan-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "scan-client-scan-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "scan-client-scan-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/scan-client/scan-client-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
@@ -18,5 +136,6 @@
     "@nrwl/schematics:library": {
       "style": "scss"
     }
-  }
+  },
+  "defaultProject": "scan-client-scan-client"
 }
