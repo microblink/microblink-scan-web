@@ -19,6 +19,9 @@
     },
     "scan-admin-scan-admin-e2e": {
       "tags": []
+    },
+    "exchanger-scan-data-exchanger": {
+      "tags": []
     }
   }
 }

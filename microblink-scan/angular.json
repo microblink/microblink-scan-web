@@ -236,6 +236,37 @@
           }
         }
       }
+    },
+    "exchanger-scan-data-exchanger": {
+      "root": "libs/exchanger/scan-data-exchanger",
+      "sourceRoot": "libs/exchanger/scan-data-exchanger/src",
+      "projectType": "library",
+      "prefix": "microblink",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/exchanger/scan-data-exchanger/tsconfig.lib.json",
+              "libs/exchanger/scan-data-exchanger/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/exchanger/scan-data-exchanger/jest.config.js",
+            "tsConfig": "libs/exchanger/scan-data-exchanger/tsconfig.spec.json",
+            "setupFile": "libs/exchanger/scan-data-exchanger/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {
