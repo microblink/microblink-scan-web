@@ -3,9 +3,9 @@
   "version": 1,
   "newProjectRoot": "",
   "projects": {
-    "scan-client-scan-client": {
-      "root": "apps/scan-client/scan-client/",
-      "sourceRoot": "apps/scan-client/scan-client/src",
+    "public-scan-client": {
+      "root": "apps/public/scan-client/",
+      "sourceRoot": "apps/public/scan-client/src",
       "projectType": "application",
       "prefix": "microblink",
       "schematics": {
@@ -17,24 +17,24 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/scan-client/scan-client",
-            "index": "apps/scan-client/scan-client/src/index.html",
-            "main": "apps/scan-client/scan-client/src/main.ts",
-            "polyfills": "apps/scan-client/scan-client/src/polyfills.ts",
-            "tsConfig": "apps/scan-client/scan-client/tsconfig.app.json",
+            "outputPath": "dist/apps/public/scan-client",
+            "index": "apps/public/scan-client/src/index.html",
+            "main": "apps/public/scan-client/src/main.ts",
+            "polyfills": "apps/public/scan-client/src/polyfills.ts",
+            "tsConfig": "apps/public/scan-client/tsconfig.app.json",
             "assets": [
-              "apps/scan-client/scan-client/src/favicon.ico",
-              "apps/scan-client/scan-client/src/assets"
+              "apps/public/scan-client/src/favicon.ico",
+              "apps/public/scan-client/src/assets"
             ],
-            "styles": ["apps/scan-client/scan-client/src/styles.scss"],
+            "styles": ["apps/public/scan-client/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/scan-client/scan-client/src/environments/environment.ts",
-                  "with": "apps/scan-client/scan-client/src/environments/environment.prod.ts"
+                  "replace": "apps/public/scan-client/src/environments/environment.ts",
+                  "with": "apps/public/scan-client/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -59,26 +59,26 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "scan-client-scan-client:build"
+            "browserTarget": "public-scan-client:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "scan-client-scan-client:build:production"
+              "browserTarget": "public-scan-client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "scan-client-scan-client:build"
+            "browserTarget": "public-scan-client:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/scan-client/scan-client/tsconfig.app.json",
-              "apps/scan-client/scan-client/tsconfig.spec.json"
+              "apps/public/scan-client/tsconfig.app.json",
+              "apps/public/scan-client/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }
@@ -86,43 +86,43 @@
         "test": {
           "builder": "@nrwl/builders:jest",
           "options": {
-            "jestConfig": "apps/scan-client/scan-client/jest.config.js",
-            "tsConfig": "apps/scan-client/scan-client/tsconfig.spec.json",
-            "setupFile": "apps/scan-client/scan-client/src/test-setup.ts"
+            "jestConfig": "apps/public/scan-client/jest.config.js",
+            "tsConfig": "apps/public/scan-client/tsconfig.spec.json",
+            "setupFile": "apps/public/scan-client/src/test-setup.ts"
           }
         }
       }
     },
-    "scan-client-scan-client-e2e": {
-      "root": "apps/scan-client/scan-client-e2e",
+    "public-scan-client-e2e": {
+      "root": "apps/public/scan-client-e2e",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@nrwl/builders:cypress",
           "options": {
-            "cypressConfig": "apps/scan-client/scan-client-e2e/cypress.json",
-            "tsConfig": "apps/scan-client/scan-client-e2e/tsconfig.e2e.json",
-            "devServerTarget": "scan-client-scan-client:serve"
+            "cypressConfig": "apps/public/scan-client-e2e/cypress.json",
+            "tsConfig": "apps/public/scan-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "public-scan-client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "scan-client-scan-client:serve:production"
+              "devServerTarget": "public-scan-client:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "apps/scan-client/scan-client-e2e/tsconfig.e2e.json",
+            "tsConfig": "apps/public/scan-client-e2e/tsconfig.e2e.json",
             "exclude": ["**/node_modules/**"]
           }
         }
       }
     },
-    "scan-admin-scan-admin": {
-      "root": "apps/scan-admin/scan-admin/",
-      "sourceRoot": "apps/scan-admin/scan-admin/src",
+    "private-scan-admin": {
+      "root": "apps/private/scan-admin/",
+      "sourceRoot": "apps/private/scan-admin/src",
       "projectType": "application",
       "prefix": "microblink",
       "schematics": {
@@ -134,24 +134,24 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/scan-admin/scan-admin",
-            "index": "apps/scan-admin/scan-admin/src/index.html",
-            "main": "apps/scan-admin/scan-admin/src/main.ts",
-            "polyfills": "apps/scan-admin/scan-admin/src/polyfills.ts",
-            "tsConfig": "apps/scan-admin/scan-admin/tsconfig.app.json",
+            "outputPath": "dist/apps/private/scan-admin",
+            "index": "apps/private/scan-admin/src/index.html",
+            "main": "apps/private/scan-admin/src/main.ts",
+            "polyfills": "apps/private/scan-admin/src/polyfills.ts",
+            "tsConfig": "apps/private/scan-admin/tsconfig.app.json",
             "assets": [
-              "apps/scan-admin/scan-admin/src/favicon.ico",
-              "apps/scan-admin/scan-admin/src/assets"
+              "apps/private/scan-admin/src/favicon.ico",
+              "apps/private/scan-admin/src/assets"
             ],
-            "styles": ["apps/scan-admin/scan-admin/src/styles.scss"],
+            "styles": ["apps/private/scan-admin/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/scan-admin/scan-admin/src/environments/environment.ts",
-                  "with": "apps/scan-admin/scan-admin/src/environments/environment.prod.ts"
+                  "replace": "apps/private/scan-admin/src/environments/environment.ts",
+                  "with": "apps/private/scan-admin/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -176,26 +176,26 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "scan-admin-scan-admin:build"
+            "browserTarget": "private-scan-admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "scan-admin-scan-admin:build:production"
+              "browserTarget": "private-scan-admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "scan-admin-scan-admin:build"
+            "browserTarget": "private-scan-admin:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/scan-admin/scan-admin/tsconfig.app.json",
-              "apps/scan-admin/scan-admin/tsconfig.spec.json"
+              "apps/private/scan-admin/tsconfig.app.json",
+              "apps/private/scan-admin/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }
@@ -203,35 +203,35 @@
         "test": {
           "builder": "@nrwl/builders:jest",
           "options": {
-            "jestConfig": "apps/scan-admin/scan-admin/jest.config.js",
-            "tsConfig": "apps/scan-admin/scan-admin/tsconfig.spec.json",
-            "setupFile": "apps/scan-admin/scan-admin/src/test-setup.ts"
+            "jestConfig": "apps/private/scan-admin/jest.config.js",
+            "tsConfig": "apps/private/scan-admin/tsconfig.spec.json",
+            "setupFile": "apps/private/scan-admin/src/test-setup.ts"
           }
         }
       }
     },
-    "scan-admin-scan-admin-e2e": {
-      "root": "apps/scan-admin/scan-admin-e2e",
+    "private-scan-admin-e2e": {
+      "root": "apps/private/scan-admin-e2e",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@nrwl/builders:cypress",
           "options": {
-            "cypressConfig": "apps/scan-admin/scan-admin-e2e/cypress.json",
+            "cypressConfig": "apps/private/scan-admin-e2e/cypress.json",
             "tsConfig": "apps/scan-admin/scan-admin-e2e/tsconfig.e2e.json",
-            "devServerTarget": "scan-admin-scan-admin:serve"
+            "devServerTarget": "private-scan-admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "scan-admin-scan-admin:serve:production"
+              "devServerTarget": "private-scan-admin:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "apps/scan-admin/scan-admin-e2e/tsconfig.e2e.json",
+            "tsConfig": "apps/private/scan-admin-e2e/tsconfig.e2e.json",
             "exclude": ["**/node_modules/**"]
           }
         }
@@ -285,5 +285,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "scan-client-scan-client"
+  "defaultProject": "public-scan-client"
 }
