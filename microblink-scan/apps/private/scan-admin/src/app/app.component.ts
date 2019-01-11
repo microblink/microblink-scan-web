@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'scan-admin-scan-admin';
+  title = 'private-scan-admin';
 }
