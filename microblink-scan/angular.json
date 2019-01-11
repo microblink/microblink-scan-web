@@ -149,7 +149,8 @@
             "tsConfig": "apps/private/scan-admin/tsconfig.app.json",
             "assets": [
               "apps/private/scan-admin/src/favicon.ico",
-              "apps/private/scan-admin/src/assets"
+              "apps/private/scan-admin/src/assets",
+              "apps/private/scan-admin/src/manifest.json"
             ],
             "styles": [
               "apps/private/scan-admin/src/styles.scss"
@@ -179,7 +180,8 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
