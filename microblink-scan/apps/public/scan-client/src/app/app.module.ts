@@ -17,6 +17,7 @@ import { UiModule } from './ui/ui.module';
 // @angular/fire/ Modules
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AppRoutingModule } from './app-routing.module';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
 // import { AngularFireFunctionsModule } from '@angular/fire/functions';
@@ -26,9 +27,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   imports: [
     BrowserModule,
     NxModule.forRoot(),
-    RouterModule.forRoot([], { 
-      initialNavigation: 'enabled' 
-    }),
+    AppRoutingModule,
     CoreModule,
     UiModule,
     AngularFireModule.initializeApp(environment.firebase, 'microblink-scan'),
