@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyC2EeRiAwTGj4Gv28RVjYLkU_sUYLafCqg",
-    authDomain: "microblink-api-exchanger.firebaseapp.com",
-    databaseURL: "https://microblink-api-exchanger.firebaseio.com",
-    projectId: "microblink-api-exchanger",
-    storageBucket: "microblink-api-exchanger.appspot.com",
-    messagingSenderId: "902458803135"
+    apiKey: "AIzaSyDX05s2f5QEreP67ouF2uBz-gTEFN996ig",
+    authDomain: "microblink-api-exchanger-dev.firebaseapp.com",
+    databaseURL: "https://microblink-api-exchanger-dev.firebaseio.com",
+    projectId: "microblink-api-exchanger-dev",
+    storageBucket: "microblink-api-exchanger-dev.appspot.com",
+    messagingSenderId: "653689852629"
   }
 };
 

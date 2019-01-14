@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+
 // Firestarter App Modules
 import { CoreModule } from './core/core.module';
 import { UiModule } from './ui/ui.module';
@@ -30,6 +33,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     UiModule,
     AngularFireModule.initializeApp(environment.firebase, 'microblink-scan'),
     AngularFirestoreModule,
+    StoreModule.forRoot({
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { 
       enabled: environment.production 
     })
