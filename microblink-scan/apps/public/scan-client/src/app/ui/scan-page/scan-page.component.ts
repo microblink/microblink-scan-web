@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ScanService } from '../../core/services/scan.service';
 
 @Component({
   selector: 'microblink-scan-page',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScanPageComponent implements OnInit {
 
-  constructor() { }
+  scan$: any;
+
+  constructor(private scanService: ScanService) { }
 
   ngOnInit() {
+    this.scan$ = this.scanService.getScanById('nekiScanId')
   }
 
 }

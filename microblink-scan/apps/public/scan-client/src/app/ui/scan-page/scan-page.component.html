@@ -1,3 +1,12 @@
-<p>
+<div>
   scan-page works!
-</p>
+
+</div>
+
+
+<ng-container *ngIf="scan$ | async as scan">
+{{ scan.broj }}
+  <ng-container *ngIf="scan.superRef | doc | async as super" >
+    {{ super.naslov }}
+  </ng-container>
+</ng-container>
