@@ -1,0 +1,6 @@
+{
+  "appId": "com.microblink.scan",
+  "appName": "Microblink SCAN",
+  "bundledWebRuntime": false,
+  "webDir": "dist/apps/public/scan-client"
+}
