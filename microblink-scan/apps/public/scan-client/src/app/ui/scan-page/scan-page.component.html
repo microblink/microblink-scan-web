@@ -1,12 +1,47 @@
-<div>
+<!-- <div>
   scan-page works!
-
+  <a [routerLink]="['/']">go home</a>
 </div>
 
 
 <ng-container *ngIf="scan$ | async as scan">
+{{ scan | json }}
 {{ scan.broj }}
   <ng-container *ngIf="scan.superRef | doc | async as super" >
     {{ super.naslov }}
   </ng-container>
 </ng-container>
+
+<div>scanId = {{scanId}}</div>
+<div>key = {{key}}</div> -->
+
+
+
+<div *ngIf="inputImageAsBase64" id="image-preview" [style.background-image]="'url(' + inputImageAsBase64 + ')'">
+  &nbsp;
+</div>
+
+<input type="file" #inputFileImage id="input-file-image" accept="image/*" capture="camera" (change)="upload()">
+
+
+<div id="camera-icon" >
+  <button id="camera-icon-btn" (click)="openCamera()" >
+    <svg version="1.1" width="30vw" height="53vw" viewBox="0 0 44.502 44.502" style="enable-background:new 0 0 44.502 44.502;" xml:space="preserve">
+      <g>
+        <path d="M9.862,35.638h24.779c0-5.546-3.863-10.203-9.113-11.604c2.75-1.248,4.668-4.013,4.668-7.229
+          c0-4.388-3.559-7.942-7.942-7.942c-4.387,0-7.943,3.557-7.943,7.942c0,3.219,1.916,5.98,4.668,7.229
+          C13.725,25.435,9.862,30.092,9.862,35.638z"/>
+        <path d="M1.5,14.169c0.828,0,1.5-0.672,1.5-1.5V4.333h8.336c0.828,0,1.5-0.672,1.5-1.5c0-0.828-0.672-1.5-1.5-1.5H2.775
+          C1.244,1.333,0,2.577,0,4.108v8.561C0,13.497,0.67,14.169,1.5,14.169z"/>
+        <path d="M41.727,1.333h-8.562c-0.827,0-1.5,0.672-1.5,1.5c0,0.828,0.673,1.5,1.5,1.5h8.336v8.336c0,0.828,0.673,1.5,1.5,1.5
+          s1.5-0.672,1.5-1.5v-8.56C44.502,2.579,43.256,1.333,41.727,1.333z"/>
+        <path d="M43.002,30.333c-0.828,0-1.5,0.672-1.5,1.5v8.336h-8.336c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h8.56
+          c1.53,0,2.776-1.246,2.776-2.776v-8.56C44.502,31.005,43.83,30.333,43.002,30.333z"/>
+        <path d="M11.336,40.169H3v-8.336c0-0.828-0.672-1.5-1.5-1.5c-0.83,0-1.5,0.672-1.5,1.5v8.56c0,1.53,1.244,2.776,2.775,2.776h8.561
+          c0.828,0,1.5-0.672,1.5-1.5S12.165,40.169,11.336,40.169z"/>
+      </g>
+    </svg>
+  </button>
+</div>
+
+

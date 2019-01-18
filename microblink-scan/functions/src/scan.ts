@@ -52,9 +52,11 @@ export const onCreate = functions.firestore
 
       // Only for development to preview data in remote Firestore
       if (process.env.NODE_ENV === 'dev') {
-        return db.doc(`scan/${snapshot.id}`).create(data)
+        await db.doc(`scan/${snapshot.id}`).create(data)
       }
 
-      return null;
+      console.log('beforeSet', data)
+
+      return snapshot.ref.set(data)
 });
 

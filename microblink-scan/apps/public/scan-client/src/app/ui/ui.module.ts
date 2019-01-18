@@ -14,6 +14,7 @@ import { CoreModule } from '../core/core.module';
   imports: [
     CommonModule,
     PrettyJsonModule,
+    RouterModule,
     CoreModule
   ],
   exports: [
