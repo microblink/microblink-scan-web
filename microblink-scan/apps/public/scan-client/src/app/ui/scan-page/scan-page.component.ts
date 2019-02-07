@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ScanService } from '../../core/services/scan.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { FixImageOrientationService } from '../../core/services/fix-image-orientation.service';
 
 // TODO: refactor with Microblink NPM package when package will expose SDK module
 declare var Microblink: any;
@@ -16,6 +17,9 @@ export class ScanPageComponent implements OnInit, OnDestroy {
   scan$: any;
   scanSubscription: Subscription
 
+  // To this dimension preview image will be resized
+  maxDimension: number = 0
+
   scanId: string;
   key: string;
 
@@ -24,9 +28,9 @@ export class ScanPageComponent implements OnInit, OnDestroy {
 
   @ViewChild('inputFileImage') inputFileImage: ElementRef;
   inputImageAsBase64: string = null;
+  inputImageOrientation = 1;
 
-
-  constructor(private scanService: ScanService, private activatedRoute: ActivatedRoute) {
+  constructor(private scanService: ScanService, private activatedRoute: ActivatedRoute, private fixImageService: FixImageOrientationService) {
 
     // Read scanId (scan identificator) from URL param
     this.activatedRouteParams$ = activatedRoute.params.subscribe(params => {
@@ -41,14 +45,13 @@ export class ScanPageComponent implements OnInit, OnDestroy {
     });    
 
     Microblink.SDK.RegisterListener({
-      onScanSuccess: (data) => {
+      onScanSuccess: (data: { result: any; }) => {
         // Encrypt fetched result
         this.scanService.saveResultToScan(this.scanId, data.result, this.key)
+      },
+      onScanError: (error: any) => {
+        this.scanService.saveErrorToScan(this.scanId, error)
       }
-      // ,
-      // onScanError: (error) => {
-      //   console.error('Microblink.SDK.error', error);
-      // }
     });
   }
 
@@ -62,7 +65,8 @@ export class ScanPageComponent implements OnInit, OnDestroy {
     this.scanSubscription = this.scanService.getScanById(this.scanId).subscribe((scanData: any) => {
       if (!scanData) return
       this.scanService.setupMicroblinkSDK(scanData, this.key)
-    })
+    })    
+    this.setMaxDimension(window.innerWidth, window.innerHeight)
   }
 
   /**
@@ -97,6 +101,7 @@ export class ScanPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Get File from the browsing dialog
     const fileList: FileList = this.inputFileImage.nativeElement.files;
 
     if (fileList && fileList.length > 0) {
@@ -104,37 +109,31 @@ export class ScanPageComponent implements OnInit, OnDestroy {
       // Send first and only file from <input type="file"... from the camera (file dialog)
       this.scanService.sendImageToRecognition(this.scanId, file)
 
-      // Preview taken image
-      this.fileToBase64(fileList[0]).then((result: string) => {
-        this.inputImageAsBase64 = result;
-      }, (err: any) => {
-        // Ignore error, do nothing
-        this.inputImageAsBase64 = null;
+      // Change image's bytes depends on the orientation
+      const resetBase64 = true
+      // Preview taken image with corrected orientation
+      this.fixImageService.getImageAsBase64FromFileWithFixedOrientation(file, resetBase64, this.maxDimension).subscribe(fixedImage => {
+        this.inputImageOrientation = fixedImage.orientation     
+        this.inputImageAsBase64 = fixedImage.src 
       });
     }
   }
 
 
-  /**
-   * Convert file as blob to the base64 string
-   * @param fileImage is File object
-   */
-  private fileToBase64(fileImage: File): Promise<{}> {
-    return new Promise((resolve, reject) => {
-      let fileReader: FileReader = new FileReader();
-      if (fileReader && fileImage != null) {
-        fileReader.readAsDataURL(fileImage);
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-        };
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    const w = event.target.innerWidth;
+    const h = event.target.innerHeight;
 
-        fileReader.onerror = (error) => {
-          reject(error);
-        };
-      } else {
-        reject(new Error('No file found'));
-      }
-    });
+    this.setMaxDimension(w,h);
+  }
+
+  private setMaxDimension(w,h): void {
+    if (w > h) {
+      this.maxDimension = w
+    } else {
+      this.maxDimension = h
+    }
   }
 
   

@@ -1,4 +1,19 @@
-<p>
-  home-page works!
-  <a [routerLink]="['scan/mJIFUsIDg6oBcRXEJrNV']" [queryParams]="{ key: 'OzzibD0tbvDWMMnuEckVfxrLyWgggMgs'}">go scan/mJIFUsIDg6oBcRXEJrNV?key=OzzibD0tbvDWMMnuEckVfxrLyWgggMgs</a>
-</p>
+<h1 class="center">Click to the camera to start QR reader</h1>
+
+<input id="image-selector" 
+      #inputFileImage  
+      type="file" 
+      accept="image/*" 
+      capture="camera" 
+      (change)="qrCodeRead()">
+
+<div id="icon-camera" class="position-fullscreen" >
+  <button (click)="openCamera()" ></button>
+</div>
+
+<div id="link-to-go" class="center">
+  <div *ngIf="isQRCodeReading">Reading QR code...</div>
+  <div *ngIf="isQRCodeNotFound">Please try again, QR code is not found!</div>
+  <a [attr.href]="urlToOpen" #linkToGo target="_self" >{{urlToOpen}}</a>
+</div>
+

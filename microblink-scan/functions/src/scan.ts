@@ -5,6 +5,8 @@ import * as request from 'request-promise'
 
 const db = admin.firestore()
 
+const FIRESTORE_COLLECTION_ID = 'scans'
+
 // Build Firebase Dynamic Link
 function makeDynamicLongLink(scanId: string, key: string) {
   return urlBuilder(`${functions.config().applinks.link}`, {
@@ -33,7 +35,7 @@ function makeRequestOptions(scanId: string, key: string) {
 
 // On Create trigger for Firestore documents 'scan/*'
 export const onCreate = functions.firestore
-  .document('scan/{scanId}')
+  .document(FIRESTORE_COLLECTION_ID + '/{scanId}')
   .onCreate(async (snapshot, context) => {
   
       const data = snapshot.data();
@@ -44,6 +46,8 @@ export const onCreate = functions.firestore
 
       try {
         const parsedBody = await request(makeRequestOptions(scanId, key));
+        // Depends on value at Microblink.SDK.ScanExchangerCodes.Step02_ExchangeLinkIsGenerated
+        data.status = 'STEP_2_EXCHANGE_LINK_IS_GENERATED'
         data.shortLink = parsedBody.shortLink
         console.log('shortLinks.parsedBody', parsedBody)
       } catch (e) {
@@ -52,7 +56,7 @@ export const onCreate = functions.firestore
 
       // Only for development to preview data in remote Firestore
       if (process.env.NODE_ENV === 'dev') {
-        await db.doc(`scan/${snapshot.id}`).create(data)
+        await db.doc(`${FIRESTORE_COLLECTION_ID}/${snapshot.id}`).create(data)
       }
 
       console.log('beforeSet', data)

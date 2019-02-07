@@ -50,6 +50,7 @@
     "angular2-prettyjson": "^3.0.1",
     "core-js": "^2.5.4",
     "firebase": "^5.7.3",
+    "jsqr": "^1.2.0",
     "rxjs": "~6.3.3",
     "zone.js": "^0.8.26"
   },

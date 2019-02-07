@@ -33,11 +33,11 @@ export class ScanService {
     Microblink.SDK.SetRecognizers(scanData.recognizers)
     Microblink.SDK.SetAuthorization(Microblink.SDK.Decrypt(scanData.authorizationHeader, key))
     // This check is protector to avoid updating in the loop
-    if (scanData.status === 'STEP_1_REMOTE_CAMERA_IS_REQUESTED') {
+    if (scanData.status === Microblink.SDK.ScanExchangerCodes.Step02_ExchangeLinkIsGenerated) {
       // Persist scan.status
       await this.updateScan(scanData.scanId, { 
         // Change status
-        status: 'STEP_2_REMOTE_CAMERA_IS_PENDING'
+        status: Microblink.SDK.ScanExchangerCodes.Step03_RemoteCameraIsPending
       })
     }
   }
@@ -45,7 +45,7 @@ export class ScanService {
   async openCamera(scanId: string) {
     await this.updateScan(scanId, { 
       // Change status
-      status: 'STEP_3_REMOTE_CAMERA_IS_OPEN'
+      status: Microblink.SDK.ScanExchangerCodes.Step04_RemoteCameraIsOpen
     })
   }
 
@@ -57,7 +57,7 @@ export class ScanService {
     Microblink.SDK.SendImage({ blob: file })
     await this.updateScan(scanId, { 
       // Change status
-      status: 'STEP_4_IMAGE_IS_UPLOADING'
+      status: Microblink.SDK.ScanExchangerCodes.Step05_ImageIsUploading
     })
   }
 
@@ -73,11 +73,21 @@ export class ScanService {
     // Persist protected data
     await this.updateScan(scanId, { 
       // Change status
-      status: 'STEP_5_RESULT_IS_AVAILABLE',
+      status: Microblink.SDK.ScanExchangerCodes.Step07_ResultIsAvailable,
       // Add crypted result
       result: cryptedResult,
       // Remove shortLink for security reasons
       shortLink: null 
+    })
+  }
+
+  async saveErrorToScan(scanId: string, error) {
+    // Persist protected data
+    await this.updateScan(scanId, { 
+      // Change status
+      status: Microblink.SDK.ScanExchangerCodes.ErrorHappened,
+      // Add error data
+      error: error
     })
   }
 

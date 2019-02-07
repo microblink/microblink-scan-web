@@ -6,7 +6,7 @@ import { HomePageComponent } from './ui/home-page/home-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'scan/:scanId', component: ScanPageComponent },
+  { path: 'scans/:scanId', component: ScanPageComponent },
   { path: '**', redirectTo: '' }
 ];
 

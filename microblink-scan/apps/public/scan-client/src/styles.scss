@@ -1,3 +1,88 @@
 /* You can add global styles to this file, and also import other style files */
 
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+.center {
+  text-align: center;
+}
+
+.position-fullscreen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+// FIX EXIF orientation in image preview
+.exif-fix {
+  $height: 100vh;
+
+  max-height: $height;
+  text-align: center;
+  
+  &.orientation {
+    margin: auto;
+    display: inline-block;
+    transform-origin: center center;
+    
+    &-1 {
+      max-height: $height;
+      img {
+        max-height: $height;
+      }
+    }
+    &-2 {
+      max-height: $height;
+      transform: rotateY(180deg);
+      img {
+        max-height: $height;
+      }
+    }
+    &-3 {
+      max-height: $height;
+      transform: rotate(180deg);
+      img {
+        max-height: $height;
+      }
+    }
+    &-4 {
+      max-height: $height;
+      transform: rotateX(180deg);
+      img {
+        max-height: $height;
+      }
+    }
+    &-5 {
+      max-width: $height;
+      transform: rotate(270deg) rotateY(180deg);
+      img {
+        max-width: $height;
+      }
+    }
+    &-6 {
+      max-width: $height;
+      transform: rotate(90deg);
+      img {
+        max-width: $height;
+      }
+    }
+    &-7 {
+      max-width: $height;
+      transform: scaleX(-1) rotate(270deg);
+      img {
+        max-width: $height;
+      }
+    }
+    &-8 {
+      max-width: $height;
+      transform: rotate(270deg);
+      img {
+        max-width: $height;
+      }
+    }
+  }
+}

@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DocPipe } from './pipes/doc.pipe';
+import { RotationCorrectionPipe } from './pipes/rotation-correction.pipe';
 
 @NgModule({
   declarations: [
-    DocPipe
+    DocPipe,
+    RotationCorrectionPipe
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    DocPipe
+    DocPipe,
+    RotationCorrectionPipe
   ]
 })
 export class CoreModule { }

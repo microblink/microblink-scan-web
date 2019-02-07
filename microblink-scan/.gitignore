@@ -42,3 +42,6 @@ Thumbs.db
 android
 ios
 .gradle
+
+# Custom
+example-snippets.txt
