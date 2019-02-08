@@ -1,41 +1,20 @@
-<!-- <div>
-  scan-page works!
-  <a [routerLink]="['/']">go home</a>
-</div>
-
-
-<ng-container *ngIf="scan$ | async as scan">
-{{ scan | json }}
-{{ scan.broj }}
-  <ng-container *ngIf="scan.superRef | doc | async as super" >
-    {{ super.naslov }}
-  </ng-container>
-</ng-container>
-
-<div>scanId = {{scanId}}</div>
-<div>key = {{key}}</div> -->
-
-
-
-
-
-<!-- <div id="image-preview" 
-     *ngIf="inputImageAsBase64" 
-     [class]="'orientation-' + inputImageOrientation" [class.exif-fix]="true"
-     [style.background-image]="'url(' + inputImageAsBase64 + ')'">
-  &nbsp;
-</div> -->
-
-<!-- <div id="image-preview"
-     *ngIf="inputImageAsBase64" >
-  <img [class]="'orientation-' + inputImageOrientation" [class.exif-fix]="true" [src]="inputImageAsBase64" />    
-</div> -->
 
 <div id="image-preview" 
-     class="position-fullscreen"
-     *ngIf="inputImageAsBase64" 
-     [style.background-image]="'url(' + inputImageAsBase64 + ')'">
-  &nbsp;
+    class="position-fullscreen"
+    *ngIf="inputImageAsBase64" 
+    [style.background-image]="'url(' + inputImageAsBase64 + ')'"></div>
+
+<h1 class="center" *ngIf="!inputImageAsBase64">Click anywhere to take photo</h1>
+<h1 class="center" *ngIf="inputImageAsBase64">Click anywhere to retake photo</h1>
+
+<div id="status-text" class="center">
+  <div *ngIf="!activeStatus">Camera is pending...</div>
+  <div *ngIf="activeStatus === 'isImageReading'">Reading image...</div>
+  <div *ngIf="activeStatus === 'isImageUploading'">Uploading image...</div>
+  <div *ngIf="activeStatus === 'isImageUploading'">{{imageUploadProgress}}%</div>
+  <div *ngIf="activeStatus === 'isImageProcessing'">Processing image...</div>
+  <div *ngIf="activeStatus === 'isResultAvailable'">Result is available and sent to the desktop.</div>
+  <div *ngIf="activeStatus === 'isError'">Error happened, please try again.</div>
 </div>
 
 <input id="image-selector" 
@@ -47,7 +26,7 @@
 
 <div id="icon-camera" class="position-fullscreen" >
   <button (click)="openCamera()" >
-    <svg version="1.1" width="30vw" height="53vw" viewBox="0 0 44.502 44.502" style="enable-background:new 0 0 44.502 44.502;" xml:space="preserve">
+    <svg version="1.1" width="30vw" height="53vw" viewBox="0 0 44.502 44.502" style="enable-background:new 0 0 44.502 44.502;" xml:space="preserve" *ngIf="!inputImageAsBase64">
       <g>
         <path d="M9.862,35.638h24.779c0-5.546-3.863-10.203-9.113-11.604c2.75-1.248,4.668-4.013,4.668-7.229
           c0-4.388-3.559-7.942-7.942-7.942c-4.387,0-7.943,3.557-7.943,7.942c0,3.219,1.916,5.98,4.668,7.229

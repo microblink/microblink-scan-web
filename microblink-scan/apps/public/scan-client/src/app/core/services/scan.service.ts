@@ -9,7 +9,7 @@ declare var Microblink: any;
 })
 export class ScanService {
 
-  private basePath: string = 'scan'
+  private basePath: string = 'scans'
 
   constructor(private firestore: FirestoreService) {
 
@@ -53,10 +53,19 @@ export class ScanService {
    * Send image to Microblink API over Microblink SAK
    * @param file 
    */
-  async sendImageToRecognition(scanId: string, file: File) {
-    Microblink.SDK.SendImage({ blob: file })
+  async sendImageToRecognition(scanId: string, file: File, uploadProgress?: EventListener) {
+    Microblink.SDK.SendImage({ blob: file }, (event: ProgressEvent) => { 
+      uploadProgress(event)
+      
+      if (event.loaded === event.total) {
+        this.updateScan(scanId, { 
+          // Change status to ImageIsProcessing
+          status: Microblink.SDK.ScanExchangerCodes.Step06_ImageIsProcessing
+        })
+      }
+    })
     await this.updateScan(scanId, { 
-      // Change status
+      // Change status to ImageIsUploading
       status: Microblink.SDK.ScanExchangerCodes.Step05_ImageIsUploading
     })
   }

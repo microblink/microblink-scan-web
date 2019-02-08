@@ -7,6 +7,16 @@ import { FixImageOrientationService } from '../../core/services/fix-image-orient
 // TODO: refactor with Microblink NPM package when package will expose SDK module
 declare var Microblink: any;
 
+enum ActiveStatus {
+  isImageReading = 'isImageReading',
+  isImageUploading = 'isImageUploading',
+  isImageProcessing = 'isImageProcessing',
+  isResultAvailable = 'isResultAvailable',
+
+  isError = 'isError'
+}
+
+
 @Component({
   selector: 'microblink-scan-page',
   templateUrl: './scan-page.component.html',
@@ -16,6 +26,8 @@ export class ScanPageComponent implements OnInit, OnDestroy {
 
   scan$: any;
   scanSubscription: Subscription
+
+  activeStatus: ActiveStatus = null
 
   // To this dimension preview image will be resized
   maxDimension: number = 0
@@ -29,6 +41,8 @@ export class ScanPageComponent implements OnInit, OnDestroy {
   @ViewChild('inputFileImage') inputFileImage: ElementRef;
   inputImageAsBase64: string = null;
   inputImageOrientation = 1;
+
+  imageUploadProgress = 0
 
   constructor(private scanService: ScanService, private activatedRoute: ActivatedRoute, private fixImageService: FixImageOrientationService) {
 
@@ -44,15 +58,21 @@ export class ScanPageComponent implements OnInit, OnDestroy {
       this.key = queryParams.key
     });    
 
-    Microblink.SDK.RegisterListener({
-      onScanSuccess: (data: { result: any; }) => {
-        // Encrypt fetched result
-        this.scanService.saveResultToScan(this.scanId, data.result, this.key)
-      },
-      onScanError: (error: any) => {
-        this.scanService.saveErrorToScan(this.scanId, error)
-      }
-    });
+    try {
+      Microblink.SDK.RegisterListener({
+        onScanSuccess: (data: { result: any; }) => {
+          // Encrypt fetched result
+          this.scanService.saveResultToScan(this.scanId, data.result, this.key)
+          this.activeStatus = ActiveStatus.isResultAvailable
+        },
+        onScanError: (error: any) => {
+          this.scanService.saveErrorToScan(this.scanId, error)
+          this.activeStatus = ActiveStatus.isError
+        }
+      });
+    } catch(err) {
+      console.error('Microblink SDK is not available!')
+    }
   }
 
   /**
@@ -65,6 +85,8 @@ export class ScanPageComponent implements OnInit, OnDestroy {
     this.scanSubscription = this.scanService.getScanById(this.scanId).subscribe((scanData: any) => {
       if (!scanData) return
       this.scanService.setupMicroblinkSDK(scanData, this.key)
+    }, error => {
+      console.error('Access to exchange object is forbidden! ID=' + this.scanId + ' KEY=' + this.key)
     })    
     this.setMaxDimension(window.innerWidth, window.innerHeight)
   }
@@ -107,7 +129,20 @@ export class ScanPageComponent implements OnInit, OnDestroy {
     if (fileList && fileList.length > 0) {
       const file = fileList[0]
       // Send first and only file from <input type="file"... from the camera (file dialog)
-      this.scanService.sendImageToRecognition(this.scanId, file)
+      this.activeStatus = ActiveStatus.isImageUploading
+      this.imageUploadProgress = 0
+      this.scanService.sendImageToRecognition(this.scanId, file, (event: ProgressEvent) => {
+
+        const progress = Math.round((event.loaded / event.total) * 100)
+        this.imageUploadProgress = progress
+
+        if (progress === 100) {
+          this.activeStatus = ActiveStatus.isImageProcessing
+
+          // Reset value to enable upload of the same file
+          this.inputFileImage.nativeElement.value = ''
+        }
+      })
 
       // Change image's bytes depends on the orientation
       const resetBase64 = true

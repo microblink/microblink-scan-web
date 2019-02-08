@@ -1,3 +1,21 @@
+h1 {
+  position: fixed;
+  left: 5vw;
+  right: 5vw;
+  top: 2vh;
+  font-size: 3vh;
+}
+
+#status-text {
+  position: fixed;
+  top: 10vh;
+  left: 5vw;
+  right: 5vw;
+  text-align: center;
+  font-size: 3vh;
+  color: red;
+}
+
 #image-preview {
   background-size: contain;
   background-position: center;
@@ -9,7 +27,6 @@
 }
 
 #icon-camera {
-  opacity: 0.5;
 
   button {
     width: 100vw;
