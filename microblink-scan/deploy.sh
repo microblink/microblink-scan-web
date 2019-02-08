@@ -21,12 +21,12 @@ echo "SKIP_FUNCTIONS=$SKIP_FUNCTIONS"
 if [ "$SKIP_HOSTING" == "true" ] ; then
     echo "Skip deploy to Firebase hosting"
 else
-    if [ "$ENVIRONMENT" == "dev" ]; then
-        #ng build --target=production
-        echo "dev"
+    if [ "$ENVIRONMENT" == "production" ]; then
+        echo "production"
+        ng build public-scan-client --prod
     else
-        #ng build --environment $ENVIRONMENT --target=production
-        echo "prod"
+        echo "dev"
+        ng build public-scan-client
     fi
 
     echo "Deploy to Firebase hosting..."
