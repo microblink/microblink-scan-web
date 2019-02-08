@@ -44,6 +44,9 @@ export const onCreate = functions.firestore
       const key = data.key
       delete data.key
 
+      // Set timestamp of creation
+      data.createdAt = admin.firestore.Timestamp.now()
+
       try {
         const parsedBody = await request(makeRequestOptions(scanId, key));
         // Depends on value at Microblink.SDK.ScanExchangerCodes.Step02_ExchangeLinkIsGenerated
@@ -58,6 +61,20 @@ export const onCreate = functions.firestore
       if (process.env.NODE_ENV === 'dev') {
         await db.doc(`${FIRESTORE_COLLECTION_ID}/${snapshot.id}`).create(data)
       }
+
+      // Delete old (created more than 24 hours) exchange objects
+      const timeLimit = admin.firestore.Timestamp.now().toDate();
+      timeLimit.setDate(timeLimit.getDate() - 1);
+      const docs = await db.collection(FIRESTORE_COLLECTION_ID).where('createdAt', '<=', admin.firestore.Timestamp.fromDate(timeLimit)).get()
+      docs.forEach(async (doc) => {
+        console.log('Try to remove old scan', doc.id, " => ", doc.data());
+        try {
+          await db.doc(`${FIRESTORE_COLLECTION_ID}/${doc.id}`).delete()
+          console.log("Document successfully deleted!");
+        } catch (err) {
+          console.error("Error removing document: ", err);
+        }
+      })
 
       console.log('beforeSet', data)
 

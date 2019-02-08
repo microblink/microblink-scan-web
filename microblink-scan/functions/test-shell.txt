@@ -1,0 +1,1 @@
+onCreateScan({ "key" : "bla123", "id" : "nekiid" }, { params: { scanId: "simulirani6ss8s" }})
