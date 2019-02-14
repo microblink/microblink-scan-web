@@ -7,7 +7,7 @@
 <h1 class="center" *ngIf="!inputImageAsBase64">Click anywhere to take photo</h1>
 <h1 class="center" *ngIf="inputImageAsBase64">Click anywhere to retake photo</h1>
 
-<div id="status-text" [class.center]="true" [class.at-bottom]="true">
+<div id="status-text" [class.center]="true" >
   <div *ngIf="!activeStatus">Camera is pending...</div>
   <div *ngIf="activeStatus === 'isImageReading'">Reading image...</div>
   <div *ngIf="activeStatus === 'isImageUploading'">Uploading {{imageUploadProgress}}%</div>
