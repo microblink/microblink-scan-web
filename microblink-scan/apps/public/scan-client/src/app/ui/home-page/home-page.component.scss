@@ -6,10 +6,20 @@ canvas {
 
 h1 {
   position: fixed;
-  left: 5vw;
-  right: 5vw;
-  top: 2vh;
+  left: 0;
+  padding-left: 5vw;
+  right: 0;
+  padding-right: 5vw;
+  top: 0;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  height: 30px;
+  line-height: 30px;
+  margin: 0;
   font-size: 3vh;
+  vertical-align: middle;
+  background: black;
+  color: white;
 }
 
 #image-selector {
@@ -18,7 +28,7 @@ h1 {
 
 #link-to-go {
   position: fixed;
-  top: 10vh;
+  top: 15vh;
   left: 5vw;
   right: 5vw;
   text-align: center;

@@ -7,13 +7,12 @@
 <h1 class="center" *ngIf="!inputImageAsBase64">Click anywhere to take photo</h1>
 <h1 class="center" *ngIf="inputImageAsBase64">Click anywhere to retake photo</h1>
 
-<div id="status-text" class="center">
+<div id="status-text" [class.center]="true" [class.at-bottom]="true">
   <div *ngIf="!activeStatus">Camera is pending...</div>
   <div *ngIf="activeStatus === 'isImageReading'">Reading image...</div>
-  <div *ngIf="activeStatus === 'isImageUploading'">Uploading image...</div>
-  <div *ngIf="activeStatus === 'isImageUploading'">{{imageUploadProgress}}%</div>
-  <div *ngIf="activeStatus === 'isImageProcessing'">Processing image...</div>
-  <div *ngIf="activeStatus === 'isResultAvailable'">Result is available and sent to the desktop.</div>
+  <div *ngIf="activeStatus === 'isImageUploading'">Uploading {{imageUploadProgress}}%</div>
+  <div *ngIf="activeStatus === 'isImageProcessing'">Processing and analyzing image...</div>
+  <div *ngIf="activeStatus === 'isResultAvailable'">Results are sent to the desktop.</div>
   <div *ngIf="activeStatus === 'isError'">Error happened, please try again.</div>
 </div>
 
@@ -41,6 +40,16 @@
           c0.828,0,1.5-0.672,1.5-1.5S12.165,40.169,11.336,40.169z"/>
       </g>
     </svg>
+  </button>
+</div>
+
+<div id="loader" *ngIf="activeStatus === 'isImageReading' || activeStatus === 'isImageUploading' || activeStatus === 'isImageProcessing'" >
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+</div>
+
+<div id="new-qr-scan" *ngIf="activeStatus === 'isResultAvailable' || activeStatus === 'isError'" >
+  <button routerLink="">
+    <span>Scan new exchange QR</span>
   </button>
 </div>
 
