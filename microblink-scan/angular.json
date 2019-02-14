@@ -57,6 +57,31 @@
                 }
               ],
               "serviceWorker": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/public/scan-client/src/environments/environment.ts",
+                  "with": "apps/public/scan-client/src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -67,6 +92,9 @@
           },
           "configurations": {
             "production": {
+              "browserTarget": "public-scan-client:build:production"
+            },
+            "staging": {
               "browserTarget": "public-scan-client:build:production"
             }
           }
@@ -113,6 +141,9 @@
           },
           "configurations": {
             "production": {
+              "devServerTarget": "public-scan-client:serve:production"
+            },
+            "staging": {
               "devServerTarget": "public-scan-client:serve:production"
             }
           }
@@ -182,6 +213,31 @@
                 }
               ],
               "serviceWorker": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/private/scan-admin/src/environments/environment.ts",
+                  "with": "apps/private/scan-admin/src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -193,6 +249,9 @@
           },
           "configurations": {
             "production": {
+              "browserTarget": "private-scan-admin:build:production"
+            },
+            "staging": {
               "browserTarget": "private-scan-admin:build:production"
             }
           }
@@ -239,6 +298,9 @@
           },
           "configurations": {
             "production": {
+              "devServerTarget": "private-scan-admin:serve:production"
+            },
+            "staging": {
               "devServerTarget": "private-scan-admin:serve:production"
             }
           }

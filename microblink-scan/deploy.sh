@@ -26,7 +26,7 @@ else
         ng build public-scan-client --prod
     else
         echo "dev"
-        ng build public-scan-client
+        ng build public-scan-client --configuration staging
     fi
 
     echo "Deploy to Firebase hosting..."
