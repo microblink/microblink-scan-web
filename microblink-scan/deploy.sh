@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if [ "$1" == "production" ]; then
-    ENVIRONMENT="prod"
+    ENVIRONMENT="production"
     FIREBASE_PROJECT="microblink-api-exchanger"
 else
-    ENVIRONMENT="dev"
+    ENVIRONMENT="staging"
     FIREBASE_PROJECT="microblink-api-exchanger-dev"
 fi
 
@@ -22,10 +22,10 @@ if [ "$SKIP_HOSTING" == "true" ] ; then
     echo "Skip deploy to Firebase hosting"
 else
     if [ "$ENVIRONMENT" == "production" ]; then
-        echo "production"
+        echo "Production build environment.prod"
         ng build public-scan-client --prod
     else
-        echo "dev"
+        echo "Staging build environment.staging"
         ng build public-scan-client --configuration staging
     fi
 

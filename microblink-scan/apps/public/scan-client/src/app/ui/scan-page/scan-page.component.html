@@ -1,3 +1,4 @@
+<ng-progress #progressBar></ng-progress>
 
 <div id="image-preview" 
     class="position-fullscreen"
@@ -5,12 +6,19 @@
     [style.background-image]="'url(' + inputImageAsBase64 + ')'"></div>
 
 <h1 class="center" *ngIf="!inputImageAsBase64">Click anywhere to take photo</h1>
-<h1 class="center" *ngIf="inputImageAsBase64">Click anywhere to retake photo</h1>
+<h1 class="center" *ngIf="inputImageAsBase64">
+  <span *ngIf="activeStatus === 'isResultAvailable' || activeStatus === 'isError'">
+      Click anywhere to retake photo
+  </span>
+
+  <span *ngIf="activeStatus === 'isImageUploading'">Uploading...</span>
+  <span *ngIf="activeStatus === 'isImageProcessing'">Processing...</span>
+</h1>
 
 <div id="status-text" [class.center]="true" >
   <div *ngIf="!activeStatus">Camera is pending...</div>
   <div *ngIf="activeStatus === 'isImageReading'">Reading image...</div>
-  <div *ngIf="activeStatus === 'isImageUploading'">Uploading {{imageUploadProgress}}%</div>
+  <div *ngIf="activeStatus === 'isImageUploading'">{{imageUploadProgress}}%</div>
   <div *ngIf="activeStatus === 'isImageProcessing'">Processing and analyzing image...</div>
   <div *ngIf="activeStatus === 'isResultAvailable'">Results are sent to the desktop.</div>
   <div *ngIf="activeStatus === 'isError'">Error happened, please try again.</div>
@@ -24,7 +32,7 @@
        (change)="upload()">
 
 <div id="icon-camera" class="position-fullscreen" >
-  <button (click)="openCamera()" >
+  <button (click)="openCamera()" [disabled]="activeStatus === 'isImageReading' || activeStatus === 'isImageUploading' || activeStatus === 'isImageProcessing'" >
     <svg version="1.1" viewBox="0 0 44.502 44.502" style="enable-background:new 0 0 44.502 44.502;" xml:space="preserve" *ngIf="!inputImageAsBase64">
       <g>
         <path d="M9.862,35.638h24.779c0-5.546-3.863-10.203-9.113-11.604c2.75-1.248,4.668-4.013,4.668-7.229
@@ -50,6 +58,12 @@
 <div id="new-qr-scan" *ngIf="activeStatus === 'isResultAvailable' || activeStatus === 'isError'" >
   <button routerLink="">
     <span>Scan new exchange QR</span>
+  </button>
+</div>
+
+<div id="retake-photo" *ngIf="activeStatus === 'isResultAvailable' || activeStatus === 'isError'" >
+  <button (click)="openCamera()">
+    <span>Retake photo</span>
   </button>
 </div>
 

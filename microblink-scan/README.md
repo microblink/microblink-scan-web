@@ -1,44 +1,40 @@
-# MicroblinkScan
+# Microblink Scan App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) using [Nrwl Nx](https://nrwl.io/nx).
+This is Angular application which handle exchange link routing for (Microblink API UI component (microblink-js))[https://github.com/microblink/microblink-js].  
 
-## Nrwl Extensions for Angular (Nx)
+This application is opened at smartphone when desktop-to-mobile feature is requested by user at `microblink-js`.
 
-<a href="https://nrwl.io/nx"><img src="https://preview.ibb.co/mW6sdw/nx_logo.png"></a>
+## Setup Firebase credentials
 
-Nx is an open source toolkit for enterprise Angular applications.
+Change credentials at files:
 
-Nx is designed to help you create and build enterprise grade Angular applications. It provides an opinionated approach to application project structure and patterns.
+`./apps/public/scan-client/src/environments/`
+- `environment.prod.ts`
+- `environment.staging.ts`
+- `environment.ts`
 
-## Quick Start & Documentation
+## Setup Firebase functions ENV variables
 
-[Watch a 5-minute video on how to get started with Nx.](http://nrwl.io/nx)
+Public API key for your Firebase project
+```
+firebase functions:config:set applinks.key="<FIREBASE_PROJECT_KEY>"
+```
 
-## Generate your first application
+Prefix of your application where Angular APP `./apps/public/scan-client` will be deployed + `/scans` route where `scan-page.component` will handle exchange link.
+```
+firebase functions:config:set applinks.redirect_url_prefix="https://scan.microblink.com/scans"
+```
 
-Run `ng generate app scanClient --directory=scan-client` to generate an application. When using Nx, you can create multiple applications and libraries in the same CLI workspace. Read more [here](http://nrwl.io/nx).
+Add Firebase Dynamic links domain at:
+https://console.firebase.google.com/u/0/project/<FIREBASE_PROJECT_ID>/durablelinks
+```
+firebase functions:config:set applinks.link="https://mbe.page.link/"
+```
 
-## Development server
+To take effect of ENV variables change deploy Firebase functions
+```
+firebase use <FIREBASE_PROJECT_ID>
+firebase deploy --only functions
+```
 
-Run `ng serve --project=scanClient` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name --project=scanClient` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build --project=scanClient` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

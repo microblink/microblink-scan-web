@@ -56,7 +56,7 @@ export class ScanService {
   async sendImageToRecognition(scanId: string, file: File, uploadProgress?: EventListener) {
     Microblink.SDK.SendImage({ blob: file }, (event: ProgressEvent) => { 
       uploadProgress(event)
-      
+
       if (event.loaded === event.total) {
         this.updateScan(scanId, { 
           // Change status to ImageIsProcessing

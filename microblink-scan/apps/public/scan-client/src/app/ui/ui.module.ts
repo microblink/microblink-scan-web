@@ -5,6 +5,7 @@ import { ScanPageComponent } from './scan-page/scan-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CoreModule } from '../core/core.module';
+import { NgProgressModule } from '@ngx-progressbar/core';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CoreModule } from '../core/core.module';
     CommonModule,
     PrettyJsonModule,
     RouterModule,
-    CoreModule
+    CoreModule,
+    NgProgressModule
   ],
   exports: [
     ScanPageComponent

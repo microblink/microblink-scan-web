@@ -3,6 +3,7 @@ import { ScanService } from '../../core/services/scan.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { FixImageOrientationService } from '../../core/services/fix-image-orientation.service';
+import { NgProgressComponent } from '@ngx-progressbar/core';
 
 // TODO: refactor with Microblink NPM package when package will expose SDK module
 declare var Microblink: any;
@@ -23,6 +24,8 @@ enum ActiveStatus {
   styleUrls: ['./scan-page.component.scss']
 })
 export class ScanPageComponent implements OnInit, OnDestroy {
+
+  @ViewChild(NgProgressComponent) progressBar: NgProgressComponent;
 
   scan$: any;
   scanSubscription: Subscription
@@ -64,10 +67,12 @@ export class ScanPageComponent implements OnInit, OnDestroy {
           // Encrypt fetched result
           this.scanService.saveResultToScan(this.scanId, data.result, this.key)
           this.activeStatus = ActiveStatus.isResultAvailable
+          this.progressBar.complete()
         },
         onScanError: (error: any) => {
           this.scanService.saveErrorToScan(this.scanId, error)
           this.activeStatus = ActiveStatus.isError
+          this.progressBar.complete()
         }
       });
     } catch(err) {
@@ -110,6 +115,16 @@ export class ScanPageComponent implements OnInit, OnDestroy {
     if (this.inputFileImage == null) {
       return;
     }
+
+    // Disable open camera if current image is reading/uploading/processing!
+    if (
+      this.activeStatus === ActiveStatus.isImageReading || 
+      this.activeStatus === ActiveStatus.isImageUploading || 
+      this.activeStatus === ActiveStatus.isImageProcessing
+    ) {
+      return;
+    }
+
     this.inputFileImage.nativeElement.click();
     this.scanService.openCamera(this.scanId)
   }
@@ -131,17 +146,24 @@ export class ScanPageComponent implements OnInit, OnDestroy {
       // Send first and only file from <input type="file"... from the camera (file dialog)
       this.activeStatus = ActiveStatus.isImageUploading
       this.imageUploadProgress = 0
+      this.progressBar.start()
       this.scanService.sendImageToRecognition(this.scanId, file, (event: ProgressEvent) => {
 
         const progress = Math.round((event.loaded / event.total) * 100)
-        this.imageUploadProgress = progress
 
-        if (progress === 100) {
-          this.activeStatus = ActiveStatus.isImageProcessing
+        // Sometimes progress 100 is called twice, first time during upload and another time when upload is done
+        if (progress === 100 && this.imageUploadProgress !== 100) {
+          // Better UX when progress at 100% is visible for 300ms
+          setTimeout(() => {
+            this.activeStatus = ActiveStatus.isImageProcessing
+            this.imageUploadProgress = 0
+          }, 500)
 
           // Reset value to enable upload of the same file
           this.inputFileImage.nativeElement.value = ''
-        }
+        } 
+
+        this.imageUploadProgress = progress
       })
 
       // Change image's bytes depends on the orientation
