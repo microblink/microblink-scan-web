@@ -157,6 +157,7 @@ export class ScanPageComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.activeStatus = ActiveStatus.isImageProcessing
             this.imageUploadProgress = 0
+            console.log('imageUploadProgress', this.imageUploadProgress);
           }, 500)
 
           // Reset value to enable upload of the same file
@@ -164,6 +165,7 @@ export class ScanPageComponent implements OnInit, OnDestroy {
         } 
 
         this.imageUploadProgress = progress
+        console.log('imageUploadProgress', this.imageUploadProgress);
       })
 
       // Change image's bytes depends on the orientation
