@@ -71,6 +71,11 @@ export class ScanPageComponent implements OnInit, OnDestroy {
         },
         onScanError: (error: any) => {
           this.scanService.saveErrorToScan(this.scanId, error)
+
+          if (error.summary) {
+            alert(error.summary)
+          }
+
           this.activeStatus = ActiveStatus.isError
           this.progressBar.complete()
         }
@@ -153,7 +158,7 @@ export class ScanPageComponent implements OnInit, OnDestroy {
 
         // Sometimes progress 100 is called twice, first time during upload and another time when upload is done
         if (progress === 100 && this.imageUploadProgress !== 100) {
-          // Better UX when progress at 100% is visible for 300ms
+          // Better UX when progress at 100% is visible for 500ms
           setTimeout(() => {
             this.activeStatus = ActiveStatus.isImageProcessing
             this.imageUploadProgress = 0

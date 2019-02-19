@@ -18,7 +18,7 @@
 <div id="status-text" [class.center]="true" >
   <div *ngIf="!activeStatus">Camera is pending...</div>
   <div *ngIf="activeStatus === 'isImageReading'">Reading image...</div>
-  <div *ngIf="activeStatus === 'isImageUploading'">{{imageUploadProgress}}%</div>
+  <div *ngIf="activeStatus === 'isImageUploading'">{{imageUploadProgress}}% </div>
   <div *ngIf="activeStatus === 'isImageProcessing'">Processing and analyzing image...</div>
   <div *ngIf="activeStatus === 'isResultAvailable'">Results are sent to the desktop.</div>
   <div *ngIf="activeStatus === 'isError'">Error happened, please try again.</div>
@@ -66,5 +66,3 @@
     <span>Retake photo</span>
   </button>
 </div>
-
-
