@@ -17,6 +17,7 @@ import { UiModule } from './ui/ui.module';
 // @angular/fire/ Modules
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AppRoutingModule } from './app-routing.module';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -32,6 +33,7 @@ import { AppRoutingModule } from './app-routing.module';
     UiModule,
     AngularFireModule.initializeApp(environment.firebase, 'microblink-scan'),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     StoreModule.forRoot({
     }),
     StoreDevtoolsModule.instrument({

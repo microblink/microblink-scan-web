@@ -28,6 +28,24 @@ URL which should be shortened is `https://<CUSTOM_DOMAIN>/scans/<SCAN_ID>?key<SE
 
 This short URL will be also generated in `microblink-js` in QR code.
 
+## Setup Firebase Storage CORS configuration
+
+It is necessary to allow all origins to download files. 
+Create a file called `cors.json` and place the following snippet inside. 
+```json
+[
+  {
+    "origin": ["*"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+Then run:
+```
+gsutil cors set cors.json gs://<YOUR-STORAGE-BUCKET>
+```
+
 ## Setup Firebase functions ENV variables
 
 Public API key for your Firebase project

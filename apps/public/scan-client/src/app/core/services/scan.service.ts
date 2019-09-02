@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
+import { StorageService } from './storage.service';
 
 // TODO: refactor with Microblink NPM package when package will expose SDK module
 declare var Microblink: any;
@@ -11,9 +12,7 @@ export class ScanService {
 
   private basePath: string = 'scans'
 
-  constructor(private firestore: FirestoreService) {
-
-  }
+  constructor(private firestore: FirestoreService, private storage: StorageService) {}
 
   /**
    * Get scan object from Firestore by ID
@@ -32,6 +31,8 @@ export class ScanService {
     // Setup Microblink SDK from exchanged config
     Microblink.SDK.SetRecognizers(scanData.recognizers)
     Microblink.SDK.SetAuthorization(Microblink.SDK.Decrypt(scanData.authorizationHeader, key))
+    Microblink.SDK.SetExportImages(scanData.exportImages);
+    Microblink.SDK.SetDetectGlare(scanData.detectGlare);
     // This check is protector to avoid updating in the loop
     if (scanData.status === Microblink.SDK.ScanExchangerCodes.Step02_ExchangeLinkIsGenerated) {
       // Persist scan.status
@@ -74,17 +75,24 @@ export class ScanService {
    * Store OCR result to the scan object
    * @param scanId is can object UID
    * @param result is Microblink API response
-   * @param key is crypto key with which data will be protected
+   * @param encryptionKey is crypto key with which data will be protected
    */
-  async saveResultToScan(scanId: string, result: any, key: string) {
+  async saveResultToScan(scanId: string, result: any, encryptionKey: string) {
     // Protect data
-    const cryptedResult = Microblink.SDK.Encrypt(result, key)
+    const cryptedResult = Microblink.SDK.Encrypt(result, encryptionKey)
+    // Check if cryptedResult is too large to be stored in firestore and if so upload to firebase storage
+    let resultUrl;
+    if (new Blob([cryptedResult]).size > 1000000) {
+      resultUrl = await this.storage.upload(cryptedResult);
+    }
     // Persist protected data
     await this.updateScan(scanId, { 
       // Change status
       status: Microblink.SDK.ScanExchangerCodes.Step07_ResultIsAvailable,
       // Add crypted result
-      result: cryptedResult,
+      result: resultUrl ? null : cryptedResult,
+      // Add crypted result in file format if too large for firestore
+      resultUrl: resultUrl ? resultUrl : null,
       // Remove shortLink for security reasons
       shortLink: null 
     })
