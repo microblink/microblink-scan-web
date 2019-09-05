@@ -81,18 +81,19 @@ export class ScanService {
     // Protect data
     const cryptedResult = Microblink.SDK.Encrypt(result, encryptionKey)
     // Check if cryptedResult is too large to be stored in firestore and if so upload to firebase storage
-    let resultUrl;
+    let cryptedResultUrl;
     if (new Blob([cryptedResult]).size > 1000000) {
-      resultUrl = await this.storage.upload(cryptedResult);
+      const resultUrl = await this.storage.upload(cryptedResult);
+      cryptedResultUrl = Microblink.SDK.Encrypt(resultUrl, encryptionKey);
     }
     // Persist protected data
     await this.updateScan(scanId, { 
       // Change status
       status: Microblink.SDK.ScanExchangerCodes.Step07_ResultIsAvailable,
       // Add crypted result
-      result: resultUrl ? null : cryptedResult,
+      result: cryptedResultUrl ? null : cryptedResult,
       // Add crypted result in file format if too large for firestore
-      resultUrl: resultUrl ? resultUrl : null,
+      resultUrl: cryptedResultUrl ? cryptedResultUrl : null,
       // Remove shortLink for security reasons
       shortLink: null 
     })
