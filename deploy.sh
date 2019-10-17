@@ -23,10 +23,10 @@ if [ "$SKIP_HOSTING" == "true" ] ; then
 else
     if [ "$ENVIRONMENT" == "production" ]; then
         echo "Production build environment.prod"
-        ng build public-scan-client --prod
+        npm run build-production
     else
         echo "Staging build environment.staging"
-        ng build public-scan-client --configuration staging
+        npm run build-staging
     fi
 
     echo "Deploy to Firebase hosting..."
