@@ -31,7 +31,7 @@ This short URL will be also generated in `microblink-js` in QR code.
 ## Setup Firebase Storage CORS configuration
 
 It is necessary to allow all origins to download files. 
-Create a file called `cors.json` and place the following snippet inside. 
+In the root directory of this project a file called `cors.json` has been created with the following contents. 
 ```json
 [
   {
@@ -41,7 +41,7 @@ Create a file called `cors.json` and place the following snippet inside.
   }
 ]
 ```
-Then run:
+To update cors settings for your storage bucket run:
 ```
 gsutil cors set cors.json gs://<YOUR-STORAGE-BUCKET>
 ```
@@ -73,6 +73,6 @@ firebase deploy --only functions
 ## Deployment
 
 1. Edit `./deploy.sh` with your `<FIREBASE_PROJECT_IDs>`  
-2. Run deploy script `SKIP_FUNCTIONS=true ./deploy production`
+2. Run deploy script `SKIP_FUNCTIONS=true ./deploy.sh production`
 
 
