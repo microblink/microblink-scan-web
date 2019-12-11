@@ -14,6 +14,24 @@ This application should be opened at smartphone when desktop-to-mobile feature i
 - `./apps/public/scan-client/src/environments/environment.staging.ts`
 - `./apps/public/scan-client/src/environments/environment.ts`
 
+## Setup Firestore
+
+Create empty Firestore database with rules in the file `./firestore.rules`
+```
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /scans/{scan} {    
+      allow create, get, update: if true;
+      allow list, delete: if false;
+    }    
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+```
+
 ## Setup Firebase Hosting
 
 Configure Firebase hosting with your custom domain where this single-page application will be deployed.  
@@ -28,7 +46,25 @@ URL which should be shortened is `https://<CUSTOM_DOMAIN>/scans/<SCAN_ID>?key<SE
 
 This short URL will be also generated in `microblink-js` in QR code.
 
-## Setup Firebase Storage CORS configuration
+## Setup Firebase Storage
+
+### Rules configuration
+
+Enable Storage with the `./storage.rules`  
+
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow get, create, delete: if true;
+      allow list, update: if false;
+    }
+  }
+}
+```
+
+### CORS configuration
 
 It is necessary to allow all origins to download files. 
 In the root directory of this project a file called `cors.json` has been created with the following contents. 
