@@ -36,6 +36,9 @@ export class ScanService {
     Microblink.SDK.SetAnonymizeCardNumber(scanData.anonymizeCardNumber);
     Microblink.SDK.SetAnonymizeCvv(scanData.anonymizeCvv);
     Microblink.SDK.SetAnonymizeOwner(scanData.anonymizeOwner);
+    if (!!scanData.endpoint.trim()) {
+      Microblink.SDK.SetEndpoint(scanData.endpoint);
+    }
     // This check is protector to avoid updating in the loop
     if (scanData.status === Microblink.SDK.ScanExchangerCodes.Step02_ExchangeLinkIsGenerated) {
       // Persist scan.status
