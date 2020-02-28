@@ -32,10 +32,16 @@ export class ScanService {
     Microblink.SDK.SetRecognizers(scanData.recognizers)
     Microblink.SDK.SetAuthorization(Microblink.SDK.Decrypt(scanData.authorizationHeader, key))
     Microblink.SDK.SetExportImages(scanData.exportImages);
+    Microblink.SDK.SetExportFullDocumentImage(scanData.exportFullDocumentImage);
+    Microblink.SDK.SetExportSignatureImage(scanData.exportSignatureImage);
+    Microblink.SDK.SetExportFaceImage(scanData.exportFaceImage);
     Microblink.SDK.SetDetectGlare(scanData.detectGlare);
+    Microblink.SDK.SetAllowBlurFilter(scanData.allowBlurFilter);
     Microblink.SDK.SetAnonymizeCardNumber(scanData.anonymizeCardNumber);
     Microblink.SDK.SetAnonymizeCvv(scanData.anonymizeCvv);
     Microblink.SDK.SetAnonymizeOwner(scanData.anonymizeOwner);
+    Microblink.SDK.SetAnonymizeIban(scanData.anonymizeIban);
+    Microblink.SDK.SetAnonymizeNetherlandsMrz(scanData.anonymizeNetherlandsMrz);
     if (!!scanData.endpoint.trim()) {
       Microblink.SDK.SetEndpoint(scanData.endpoint);
     }
