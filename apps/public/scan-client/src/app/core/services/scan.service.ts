@@ -42,7 +42,9 @@ export class ScanService {
     Microblink.SDK.SetAnonymizeOwner(scanData.anonymizeOwner);
     Microblink.SDK.SetAnonymizeIban(scanData.anonymizeIban);
     Microblink.SDK.SetAnonymizeNetherlandsMrz(scanData.anonymizeNetherlandsMrz);
-    Microblink.SDK.ActivateSaaS(scanData.saasIsActive);
+    if (scanData.saasIsActive) {
+      Microblink.SDK.UseCloudAPI();
+    }
     if (!!scanData.endpoint.trim()) {
       Microblink.SDK.SetEndpoint(scanData.endpoint);
     }
