@@ -1,5 +1,7 @@
 # Microblink Scan App
 
+*Microblink is replacing this feature with a new component that lets you share the scanning experience between multiple devices. See [BlinkID ImageCapture In-browser SDK](https://github.com/BlinkID/blinkid-imagecapture-in-browser) documentation.*
+
 This is an Angular application which handles exchange link routing for the (Microblink API UI component (microblink-js))[https://github.com/microblink/microblink-js].  
 
 This application should be opened on a smartphone when desktop-to-mobile feature is requested by the user at a desktop device in `microblink-js`.
